@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+ 
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:format="teste.com/LocalDateTimeConverter">
+ 
+<h:head>
+</h:head>
+ 
+<ui:composition template="/template/base.xhtml">
+ 
+	<ui:define name="content">
+		
+ 		 <!-- Dialog p/ detalhes -->
+		<p:dialog header="Detalhes do Teste" 
+				  id="dialog-modal-detalhe" 
+		   		  widgetVar="dialog-modal-detalhe" 
+		   		  modal="true" 
+		   		  height="500px"
+		   		  width="700px">
+		   		  
+    		<ui:include src="/pages/teste/visualizarTeste.xhtml"/>
+    	
+		</p:dialog>
+        
+  		 <!-- Dialog p/ ediçao -->
+		<p:dialog header="Editar um Teste" 
+				  id="dialog-modal-editar" 
+		   		  widgetVar="dialog-modal-editar" 
+		   		  modal="true" 
+		   		  height="500px"
+		   		  width="700px">
+		   		  
+    		<ui:include src="/pages/teste/alterarTeste.xhtml"/>
+    	
+		</p:dialog>
+				        
+		<h:form style="margin:auto;margin-left:2%;" id="form-consulta">
+			<p:toolbar style="width:98%;">
+				<f:facet name="left">					
+		            <p:button value="Novo Teste" 
+		            outcome="cadastrarTeste"  icon="ui-icon-folder-open"/>
+		        </f:facet>
+		 </p:toolbar>
+ 
+			<p:dataTable id="dataTable-registros"
+						 var="lancamento" 
+						 value="#{lancamentoController.getLista()}" 
+						 paginator="true"
+						 rows="15"
+						 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {JumpToPageDropdown} {NextPageLink} {LastPageLink}"
+                         currentPageReportTemplate="[ Exibindo de {startRecord} a {endRecord} no total de {totalRecords}
+                                                            - Página: {currentPage}/{totalPages} ]"
+                         style="width:98%;">
+ 
+						 <p:column headerText="Código">
+            				<h:outputText value="#{lancamento.oid}" />
+        				 </p:column>
+ 
+        				 <p:column headerText="Data evento">
+            				<h:outputText value="#{lancamento.dataEvento}">
+            					<format:LocalDateTimeConverter pattern="dd/MM/yyyy"/>
+            				</h:outputText>
+        				 </p:column> 
+        				 
+        				 <p:column headerText="Data Inicial das Inscrições">
+            				<h:outputText value="#{lancamento.dataInicialInscricoes}">
+            					<format:LocalDateTimeConverter pattern="dd/MM/yyyy"/>
+            				</h:outputText>
+        				 </p:column>
+        				 
+        				 <p:column headerText="Data Final das Inscrições">
+            				<h:outputText value="#{lancamento.dataFinalInscricoes}">
+            					<format:LocalDateTimeConverter pattern="dd/MM/yyyy"/>
+            				</h:outputText>
+        				 </p:column>  
+        				 
+        				 <p:column headerText="Hora Inicial e Final do Evento">
+            				<h:outputText style="text-align:center;"
+            							  value="#{lancamento.horaInicial}" />
+            				-
+            				<h:outputText style="text-align:center;" value="#{lancamento.horaFinal}" />
+        				 </p:column>			 
+        				       				 
+        				 
+        				 <p:column headerText="Valor">
+            				<h:outputText value="#{lancamento.valorTotal}">
+            					<f:convertNumber currencyCode="BRL" type="currency" />
+            				</h:outputText> 
+        				 </p:column>
+        				 
+        				<p:column headerText="Status">
+            				
+            				<h:outputText style="text-align:center;" value="Inativo" rendered="#{lancamento.status==0}" />  
+    						<h:outputText style="text-align:center;" value="Ativo" rendered="#{lancamento.status==1}" />            				
+            							              				
+        				 </p:column>
+ 
+ 
+        				 <p:column headerText="" style="width:25px;">
+        				 			 <p:commandButton icon="ui-icon-search" 
+      				    		     	title="Visualizar"                					 
+                   					    ajax="true" 
+                   					    oncomplete="PF('dialog-modal-detalhe').show();" 
+                   					    actionListener="#{lancamentoController.mostrarLancamento(lancamento)}"
+                   					    update="dialog-modal-detalhe"/>
+        				 </p:column>
+ 
+        				 <p:column headerText="" style="width:25px;">
+							<p:commandButton icon="ui-icon-pencil" 
+    				    				    title="Editar"                        					 
+                    					    ajax="true"  
+                   					    	oncomplete="PF('dialog-modal-editar').show();"
+                    					    actionListener="#{lancamentoBean.atualizar(lancamento)}"
+                   					        update="dialog-modal-editar" />
+        				 </p:column>
+        				 
+        				 <p:column headerText="" style="width:25px;">        				 
+	        				 <p:commandButton icon="ui-icon-trash" 
+        				    		     		 title="Excluir"                        					 
+	                        					 ajax="true"
+	                        					 actionListener="#{lancamentoController.removerLancamento(lancamento)}"
+	                        					 update="@form" />
+        				 </p:column>
+			</p:dataTable>
+ 				
+
+		</h:form>
+	</ui:define>
+ 
+</ui:composition>
+</html>
