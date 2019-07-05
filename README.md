@@ -1,4 +1,4 @@
-# teste seletivo
+# teste - controle bancario_app
 
 Esse sistema é resultante da avaliação de um processo seletivo de uma empresa de tecnologia. É responsável por inserir, atualizar e remover dados de uma conta bancária consumindo uma api restfull.
 
