@@ -35,6 +35,8 @@ https://github.com/IgorCS/sistemabanco-api
 
 7.Clique em "Next"
 
+7.1° Clicar em Run e na Opçao Spring Boot App caso esteja configurado no eclipse.
+
 8.Execute o script DUMP.sql no SGBD MySQL caso o H2 não esteja configurado.
 
 9.Acesse o projeto no postman.

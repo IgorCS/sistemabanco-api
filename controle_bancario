@@ -1,0 +1,83 @@
+/*
+SQLyog Ultimate v13.1.1 (64 bit)
+MySQL - 5.5.21 : Database - controle_bancario
+*********************************************************************
+*/
+
+/*!40101 SET NAMES utf8 */;
+
+/*!40101 SET SQL_MODE=''*/;
+
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`controle_bancario` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
+USE `controle_bancario`;
+
+/*Table structure for table `cliente` */
+
+DROP TABLE IF EXISTS `cliente`;
+
+CREATE TABLE `cliente` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `nome` (`nome`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+/*Data for the table `cliente` */
+
+insert  into `cliente`(`id`,`nome`) values 
+(4,'Francisco da Silva'),
+(5,'Guilherme Padúa'),
+(1,'João Nogueira'),
+(2,'Maria do Socorro'),
+(3,'Reginaldo Melo');
+
+/*Table structure for table `conta` */
+
+DROP TABLE IF EXISTS `conta`;
+
+CREATE TABLE `conta` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `numero` int(11) NOT NULL,
+  `saldo` float NOT NULL DEFAULT '0',
+  `id_cliente` int(11) NOT NULL,
+  `classe` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `numero` (`numero`),
+  KEY `id_cliente` (`id_cliente`),
+  CONSTRAINT `conta_ibfk_1` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+/*Data for the table `conta` */
+
+insert  into `conta`(`id`,`numero`,`saldo`,`id_cliente`,`classe`) values 
+(1,45,1000,2,'TESTE');
+
+/*Table structure for table `movimentacao` */
+
+DROP TABLE IF EXISTS `movimentacao`;
+
+CREATE TABLE `movimentacao` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  `tipo` int(11) NOT NULL,
+  `valor` float NOT NULL,
+  `id_conta` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_conta` (`id_conta`),
+  CONSTRAINT `movimentacao_ibfk_1` FOREIGN KEY (`id_conta`) REFERENCES `cliente` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+/*Data for the table `movimentacao` */
+
+insert  into `movimentacao`(`id`,`descricao`,`tipo`,`valor`,`id_conta`) values 
+(1,'TESTE',1,500,1);
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
