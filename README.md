@@ -38,12 +38,13 @@ https://github.com/IgorCS/sistemabanco-api
 7.1° Clicar em Run e na Opçao Spring Boot App caso esteja configurado no eclipse.
 
 8.Execute o script DUMP.sql no SGBD MySQL caso o H2 não esteja configurado.
+obs.: O caminho absoluto do H2 tem estar de acordo com o path relativo. senão pode configurar o dump controle_bancario e descomentar as confiurações do H2 no arquivo aplication_properties
 
 9.Acesse o projeto no postman.
 
 10.Na opção Body com a url(http://localhost:8080/oauth/token),você irá colocar a configuração  (grant_type - password),username(banco) e password (123456)
 
-11.Na opção autorization você coloca a opção Basci Auth (com o username:testebanco e passord:123456)
+11.Na opção autorization você coloca a opção Basic Auth (com o username:testebanco e passord:123456)
 
 12.0.Na opção Body com a url(http://localhost:8080/cliente),você irá colocar a configuração  (grant_type - password),username(testebanco) e password (123456)
 
